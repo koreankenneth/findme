@@ -6,22 +6,22 @@ import { loadFindMeList, getSession } from '../utils/api'
 import { AppLoading } from 'expo'
 import { setList } from '../actions/findme'
 import { setSession } from '../actions/session'
-import { getTimestamp } from '../utils/helper'
+import Header from '../components/findme/main/Header'
+import { Feather } from '@expo/vector-icons'
 
 class FindMeMainScreen extends Component {
   state = {
     ready: false,
   }
-
   componentDidMount() {
     const { dispatch, session } = this.props
-    
+
     !session.id && getSession()
-    .then((session) => dispatch(setSession(session)))
-    
+      .then((session) => dispatch(setSession(session)))
+
     loadFindMeList()
-    .then((list) => dispatch(setList(list)))
-    .then(() => this.setState({ ready: true }))
+      .then((list) => dispatch(setList(list)))
+      .then(() => this.setState({ ready: true }))
   }
 
   render() {
@@ -60,7 +60,11 @@ class FindMeMainScreen extends Component {
   }
 }
 
-function mapStateToProps({ findme, session}) {
+FindMeMainScreen.navigationOptions = (navigation) => ({
+  headerTitle: <Header navigation={navigation}/>,
+})
+
+function mapStateToProps({ findme, session }) {
   return {
     list: findme.list,
     session: session,

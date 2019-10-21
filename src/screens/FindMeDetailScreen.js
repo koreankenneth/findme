@@ -1,24 +1,31 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { AppLoading } from 'expo'
-import { StyleSheet, View, TouchableOpacity, Text } from 'react-native'
+import { StyleSheet, View, TouchableOpacity, Text, Modal } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { getFindMePost, saveComment } from '../utils/api'
+import { getFindMePost } from '../utils/api'
 import Body from '../components/findme/detail/Body'
 import Comment from '../components/findme/detail/Comment'
 import CommentWriter from '../components/common/CommentWriter'
-import { formatFindMeComment, genNewCommentID } from '../utils/helper'
+import Header from '../components/findme/detail/Header'
+import { formatFindMeComment } from '../utils/helper'
 import { setPost, addComment } from '../actions/findme'
 import Colors from '../constants/Colors'
+import FindMeOfferScreen from '../screens/FindMeOfferScreen'
 
 class FindMeDetailScreen extends Component {
   state = {
     ready: false,
+    modalVisible: false,
+  }
+
+  toggleModal() {
+    this.setState({ modalVisible: !this.state.modalVisible });
   }
 
   onSubmit = (text) => {
     const { session, dispatch, postDetail } = this.props
-    dispatch(addComment(formatFindMeComment(postDetail.comments, text, session, 'comment')))
+    dispatch(addComment(formatFindMeComment(postDetail.comments, text, session, 'comment', 0)))
   }
 
   componentDidMount() {
@@ -84,18 +91,32 @@ class FindMeDetailScreen extends Component {
         </KeyboardAwareScrollView>
         <TouchableOpacity
           style={styles.offerButton}
-          onPress={() => navigation.navigate(
-            'FindMeOfferScreen',
-          )}
+          onPress={() => this.toggleModal()}
         >
           <Text style={styles.offerText}>
             찾은 상품 올리기
           </Text>
         </TouchableOpacity>
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={this.state.modalVisible}
+        >
+          <FindMeOfferScreen
+            onClose={this.toggleModal.bind(this)}
+          />
+        </Modal>
+
       </View>
     )
   }
 }
+
+FindMeDetailScreen.navigationOptions = (navigation) => ({
+  headerTitle: <Header />,
+  headerLeft: null,
+})
 
 function mapStateToProps({ session, findme }) {
   return {
@@ -106,7 +127,6 @@ function mapStateToProps({ session, findme }) {
 
 export default connect(mapStateToProps)(FindMeDetailScreen)
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -114,7 +134,7 @@ const styles = StyleSheet.create({
   offerButton: {
     height: 50,
     width: '100%',
-    backgroundColor: '#a78563',
+    backgroundColor: Colors.brown,
     justifyContent: 'center',
     alignItems: 'center',
   },

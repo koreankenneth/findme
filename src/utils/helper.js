@@ -11,7 +11,7 @@ export function getTimestamp() {
   return `${YYYY}-${MM}-${DD} ${HH}:${MI}:${SS}`
 }
 
-export function formatFindMeComment(comments, text, session, commentType) {
+export function formatFindMeComment(comments, text, session, commentType, offerPrice) {
   let result = {
     order: genNewCommentNo(comments),
     grade: session.grade,
@@ -23,6 +23,7 @@ export function formatFindMeComment(comments, text, session, commentType) {
     isChild: commentType === 'subcomment',
     isSecret: false,
     isOffer: commentType === 'offer',
+    offerPrice: offerPrice,
     images: [
     ],
     authorInfo: {

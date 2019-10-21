@@ -13,8 +13,8 @@ class FindMeCommentScreen extends Component {
     const { session, dispatch, comments } = this.props
     const { index } = this.props.navigation.state.params
     const comment = comments[index]
-    const test = formatFindMeComment(comment.childComments, text, session, 'subcomment')
-    dispatch(addSubComment(index, test))
+    
+    dispatch(addSubComment(index, formatFindMeComment(comment.childComments, text, session, 'subcomment', 0)))
   }
 
   render() {
