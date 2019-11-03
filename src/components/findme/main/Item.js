@@ -1,40 +1,51 @@
 import React from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, Image, } from 'react-native'
+import CountDownBar from '../../common/CountDownBar'
 import Layout from '../../../constants/Layout'
 import Colors from '../../../constants/Colors'
+import { formatDateTime } from '../../../utils/helper'
 
 const width = Layout.window.width * 0.9
-const height = width * 0.3
-const photoHeight = height * 0.8
+const height = width * 0.4
+const photoHeight = height * 0.6
 
-export default function Item({ isSecret, author, title, date, imageURL, onPress }) {
+export default function Item({ isSecret, author, title, timestamp, imageURL, onPress }) {
 
   return (
-    <TouchableOpacity 
+    <TouchableOpacity
       style={styles.container}
       onPress={onPress}
     >
-      <View style={styles.photoContainer}>
-        <Image
-          style={styles.photo}
-          source={{ url: imageURL }}
-        />
+      <View style={styles.prodInfoArea}>
+        <View style={styles.photoContainer}>
+          <Image
+            style={styles.photo}
+            source={{ url: imageURL }}
+          />
+        </View>
+        <View style={styles.infoContainer}>
+          <View style={styles.additionalInfoArea}>
+            <View style={styles.leftArea}>
+              <Text style={styles.additionalInfoText}>{isSecret && 'Secret'}</Text>
+            </View>
+            <View style={styles.rightArea}>
+              <Text style={styles.additionalInfoText}>{author}</Text>
+            </View>
+          </View>
+          <View style={styles.titleArea}>
+            <Text style={styles.titleText}>{title}</Text>
+          </View>
+          <View style={styles.additionalInfoArea}>
+            <Text style={styles.additionalInfoText}>{formatDateTime('YYYY.MM.DD', timestamp)}</Text>
+          </View>
+        </View>
       </View>
-      <View style={styles.infoContainer}>
-        <View style={styles.additionalInfoArea}>
-          <View style={styles.leftArea}>
-            <Text style={styles.additionalInfoText}>{isSecret && 'Secret'}</Text>
-          </View>
-          <View style={styles.rightArea}>
-            <Text style={styles.additionalInfoText}>{author}</Text>
-          </View>
-        </View>
-        <View style={styles.titleArea}>
-          <Text style={styles.titleText}>{title}</Text>
-        </View>
-        <View style={styles.additionalInfoArea}>
-          <Text style={styles.additionalInfoText}>{date}</Text>
-        </View>
+      <View style={styles.expirationArea}>
+        <CountDownBar
+          timestamp={timestamp}
+          unit={'d'}
+          duration={14}
+        />
       </View>
     </TouchableOpacity>
   )
@@ -45,9 +56,8 @@ const styles = StyleSheet.create({
     width: width,
     height: height,
     borderRadius: height * 0.1,
-    flexDirection: 'row',
-    padding: 10,
-    marginTop: height*0.1,
+    padding: 12,
+    marginTop: height * 0.1,
 
     backgroundColor: Colors.white,
     borderWidth: 0.5,
@@ -61,10 +71,12 @@ const styles = StyleSheet.create({
       height: 3
     },
   },
+  prodInfoArea: {
+    flex: 4,
+    flexDirection: 'row',
+  },
   photoContainer: {
     flex: 3,
-    flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'center',
   },
   photo: {
@@ -77,7 +89,6 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     flex: 7,
-    paddingLeft: 5,
   },
   additionalInfoArea: {
     flex: 1,
@@ -105,5 +116,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-end',
     justifyContent: 'center',
+  },
+  expirationArea: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
   },
 })

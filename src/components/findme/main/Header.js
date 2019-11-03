@@ -9,17 +9,17 @@ export default class Header extends React.Component {
     return (
       <View style={styles.header}>
         <View style={styles.logoArea}>
-          <Image source={require('../../../../assets/images/drawable-xxxhdpi/img_logo.png')} style={styles.logo} />
+          <Image source={require('../../../../assets/images/img_logo.png')} style={styles.logo} />
         </View>
         <TouchableOpacity
           style={styles.goldkeyButton}
         >
-          <Image source={require('../../../../assets/images/drawable-xxxhdpi/ico_goldkey.png')} style={styles.goldkey} />
+          <Image source={require('../../../../assets/images/ico_goldkey.png')} style={styles.goldkey} />
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.alarmButton}
         >
-          <Image source={require('../../../../assets/images/drawable-xxxhdpi/ico_alarm.png')} style={styles.alarm} />
+          <Image source={require('../../../../assets/images/ico_alarm.png')} style={styles.alarm} />
         </TouchableOpacity>
       </View >
     );

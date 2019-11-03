@@ -6,7 +6,7 @@ export const dummyFindMeList = {
     isSecret: true,
     author: 'Kenneth Kim',
     title: 'content title #1',
-    timestamp: '2019-09-14 00:02:34',
+    timestamp: Date.parse(new Date()),
     order: 1,
   },
   FMLS000000002: {
@@ -15,7 +15,7 @@ export const dummyFindMeList = {
     isSecret: false,
     author: '김기훈',
     title: 'content title #2',
-    timestamp: '2019-09-14 00:02:34',
+    timestamp: 1476518707000,
     order: 2,
   },
   FMLS000000003: {
@@ -24,7 +24,7 @@ export const dummyFindMeList = {
     isSecret: false,
     author: 'Chloe Park',
     title: 'content title #3',
-    timestamp: '2019-09-14 00:02:34',
+    timestamp: 1476528607000,
     order: 3,
   },
   FMLS000000004: {
@@ -33,7 +33,7 @@ export const dummyFindMeList = {
     isSecret: true,
     author: 'Kenneth Cole',
     title: 'content title #4',
-    timestamp: '2019-09-14 00:02:34',
+    timestamp: 1476538607000,
     order: 4,
   },
   FMLS000000005: {
@@ -42,7 +42,7 @@ export const dummyFindMeList = {
     isSecret: true,
     author: 'Keehoon Kim',
     title: 'content title #5',
-    timestamp: '2019-09-14 00:02:34',
+    timestamp: 1476548607000,
     order: 5,
   },
   FMLS000000006: {
@@ -51,7 +51,7 @@ export const dummyFindMeList = {
     isSecret: true,
     author: 'Kenneth Cole',
     title: 'content title #6',
-    timestamp: '2019-09-14 00:02:34',
+    timestamp: 1476558607000,
     order: 6,
   },
   FMLS000000007: {
@@ -60,7 +60,7 @@ export const dummyFindMeList = {
     isSecret: true,
     author: 'Kenneth Cole',
     title: 'content title #7',
-    timestamp: '2019-09-14 00:02:34',
+    timestamp: 1476568607000,
     order: 7,
   },
   FMLS000000008: {
@@ -69,7 +69,7 @@ export const dummyFindMeList = {
     isSecret: true,
     author: 'Kenneth Cole',
     title: 'content title #8',
-    timestamp: '2019-09-14 00:02:34',
+    timestamp: 1476578607000,
     order: 8,
   },
   FMLS000000009: {
@@ -78,7 +78,7 @@ export const dummyFindMeList = {
     isSecret: true,
     author: 'Kenneth Cole',
     title: 'content title #9',
-    timestamp: '2019-09-14 00:02:34',
+    timestamp: 1476588607000,
     order: 9,
   },
   FMLS000000010: {
@@ -87,7 +87,7 @@ export const dummyFindMeList = {
     isSecret: true,
     author: 'Kenneth Cole',
     title: 'content title #10',
-    timestamp: '2019-09-14 00:02:34',
+    timestamp: 1476598607000,
     order: 10,
   },
 }
