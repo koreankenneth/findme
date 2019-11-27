@@ -1,0 +1,93 @@
+import React, { Component } from 'react'
+import { StyleSheet, View, Text, TouchableOpacity, Image, TextInput } from 'react-native'
+import Colors from '../../constants/Colors'
+
+export default class ImagerUploader extends Component {
+  render() {
+    const { onCancel } = this.props 
+    return (
+      <View style={styles.imageUploadDialog}>
+        <View style={styles.dialogHeader}>
+          <Text style={styles.dialogText}>
+            사진올리기
+              </Text>
+        </View>
+        <View style={styles.dialogBody}>
+          <TouchableOpacity
+            style={styles.dialogBtn}
+          >
+            <Text style={styles.dialogText}>
+              카메라
+                  </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.dialogBtn}
+          >
+            <Text style={styles.dialogText}>
+              갤러리
+                  </Text>
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity
+          style={styles.dialogFooter}
+          onPress={() => onCancel()}
+        >
+          <Text style={[styles.dialogText, { color: 'blue', fontWeight: '200', }]}>
+            취소
+              </Text>
+        </TouchableOpacity>
+      </View>
+    )
+  }
+}
+
+
+const styles = StyleSheet.create({
+  imageUploadDialog: {
+    height: '20%',
+    width: '40%',
+    borderWidth: 0.5,
+    borderColor: '#f8f8f8',
+    backgroundColor: '#ffffff',
+    borderRadius: 20,
+  },
+  dialogHeader: {
+    flex: 1,
+    borderBottomWidth: 0.5,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+    borderBottomColor: '#fafafa',
+    backgroundColor: '#f5f5f5',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  dialogBody: {
+    flex: 3,
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#fafafa',
+    backgroundColor: '#ffffff',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  dialogFooter: {
+    flex: 1,
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#fafafa',
+    borderBottomRightRadius: 20,
+    borderBottomLeftRadius: 20,
+    backgroundColor: '#f5f5f5',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  dialogText: {
+    fontSize: 15,
+  },
+  dialogBtn: {
+    flex: 1,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#f1f1f1',
+  },
+})

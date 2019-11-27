@@ -1,19 +1,30 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { StyleSheet, Text, View, ScrollView, Button } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, Modal, Animated } from 'react-native'
 import Item from '../components/findme/main/Item'
 import Nav from '../components/findme/main/Nav'
+import FloatingButton from '../components/common/FloatingButton'
+import FindMeWriteScreen from '../screens/FindMeWriteScreen'
 import { loadFindMeList, getSession } from '../utils/api'
 import { AppLoading } from 'expo'
 import { setList } from '../actions/findme'
 import { setSession } from '../actions/session'
 import Header from '../components/findme/main/Header'
+import Colors from '../constants/Colors'
+
+const CURRENT_LOCATION = 'FindMe'
 
 class FindMeMainScreen extends Component {
   state = {
     ready: false,
     page: 'all',
+    modalVisible: false,
   }
+
+  toggleModal() {
+    this.setState({ modalVisible: !this.state.modalVisible });
+  }
+
   componentDidMount() {
     const { dispatch, session } = this.props
 
@@ -70,6 +81,30 @@ class FindMeMainScreen extends Component {
               })
           }
         </ScrollView>
+        <Animated.View                 // Special animatable View
+          style={[
+            {
+              opacity: this.state.fadeAnim,         // Bind opacity to animated value
+            }
+          ]
+          }
+        >
+          <FloatingButton
+            location={CURRENT_LOCATION}
+            onPress={() => this.toggleModal()}
+          />
+        </Animated.View>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={this.state.modalVisible}
+        >
+          <View style={styles.modal}>
+              <FindMeWriteScreen
+                onClose={() => this.toggleModal()}
+              />
+            </View>
+        </Modal>
       </View>
     )
   }
@@ -102,6 +137,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 10,
     right: 10,
+  },
+  modal: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    paddingTop: 50,
   },
 })
 

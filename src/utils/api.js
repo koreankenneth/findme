@@ -1,4 +1,4 @@
-import { dummyFindMeList, dummyFindMePost, dummySession } from './_backend'
+import { dummyFindMeList, dummyFindMePost, dummySession, brands } from './_backend'
 
 const isDevMode = true
 
@@ -16,4 +16,8 @@ export async function getSession(id) {
 
 export async function saveComment(id, comment) {
   return isDevMode ? 1 : 1
+}
+
+export async function loadBrands() {
+  return brands
 }
