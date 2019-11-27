@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity, Modal } from 'react-native'
 import Colors from '../../../constants/Colors'
 import { AntDesign } from '@expo/vector-icons'
@@ -9,20 +8,40 @@ const textPlaceholder = `예) 2019년, FW, SS 등 제품을 찾을 때 유의사
 
 export default class Body4 extends Component {
   state = {
-    images: ['undefined', 'undefined', 'undefined', 'undefined', 'undefined'],
-    curIdx: 0,
+    images: [
+      {
+        id: 0,
+        uri: 'undefined',
+      },
+      {
+        id: 1,
+        uri: 'undefined',
+      },
+      {
+        id: 2,
+        uri: 'undefined',
+      },
+      {
+        id: 3,
+        uri: 'undefined',
+      },
+      {
+        id: 4,
+        uri: 'undefined',
+      }
+    ],
+    selectedImgIdx: 0,
     modalVisible: false,
   }
 
-  _setImageUri(uri) {
-    _images = this.state.images;
-    _images[this.state.curIdx] = uri;
-    this.props.setImages(_images);
-    this.setState({ images: _images });
+  setImageURI = (uri) => {
+    const _images = this.state.images
+    _images[this.state.selectedImgIdx].uri = uri
+    this.setState({ images: _images })
   }
 
   render() {
-    const { curIdx, images, isDialogVisiable, text } = this.props
+    const { selectedImgIdx, images, isDialogVisiable, text } = this.props
 
     return (
       <View style={styles.container}>
@@ -46,84 +65,32 @@ export default class Body4 extends Component {
             <Text style={styles.imageUploadGuide}>최소 1장의 이미지가 필요해요</Text>
           </View>
           <View style={styles.imageUploadAreaRow}>
-            {/* 이미지 썸네일 */}
-            <View style={styles.imageUploadButtonArea}>
-              <TouchableOpacity style={styles.imageUploadButton}
-                onPress={() => { this.setState({ curIdx: 0 }); this.setState({ isDialogVisiable: true }); }}>
-                {this.state.images[0] === 'undefined' ?
-                  <AntDesign style={styles.plusIcon}
-                    name='plus'
-                    size={30}
-                    color={Colors.orange}
-                  />
-                  :
-                  <Image style={styles.imageArea} source={{ uri: this.state.images[0] }} />
-                }
-              </TouchableOpacity>
-            </View>
-            <View style={styles.imageUploadButtonArea}>
-              <TouchableOpacity style={styles.imageUploadButton}
-                onPress={() => {
-                  this.setState({ curIdx: 1 })
-                  this.setState({
-                    modalVisible: true
-                  })
-                  console.log('invoked!')
-                }}>
-                {this.state.images[1] === 'undefined' ?
-                  <AntDesign style={styles.plusIcon}
-                    name='plus'
-                    size={30}
-                    color={Colors.orange}
-                  />
-                  :
-                  <Image style={styles.imageArea} source={{ uri: this.state.images[1] }} />
-                }
-              </TouchableOpacity>
-            </View>
-            <View style={styles.imageUploadButtonArea}>
-              <TouchableOpacity style={styles.imageUploadButton}
-                onPress={() => { this.setState({ curIdx: 2 }); this.setState({ isDialogVisiable: true }); }}>
-                {this.state.images[2] === 'undefined' ?
-                  <AntDesign style={styles.plusIcon}
-                    name='plus'
-                    size={30}
-                    color={Colors.orange}
-                  />
-                  :
-                  <Image style={styles.imageArea} source={{ uri: this.state.images[2] }} />
-                }
-              </TouchableOpacity>
-            </View>
-            <View style={styles.imageUploadButtonArea}>
-              <TouchableOpacity style={styles.imageUploadButton}
-                onPress={() => { this.setState({ curIdx: 3 }); this.setState({ isDialogVisiable: true }); }}>
-                {this.state.images[3] === 'undefined' ?
-                  <AntDesign style={styles.plusIcon}
-                    name='plus'
-                    size={30}
-                    color={Colors.orange}
-                  />
-                  :
-                  <Image style={styles.imageArea} source={{ uri: this.state.images[3] }} />
-                }
-              </TouchableOpacity>
-            </View>
-            <View style={styles.imageUploadButtonArea}>
-              <TouchableOpacity
-                style={styles.imageUploadButton}
-                onPress={() => { this.setState({ curIdx: 4 }); this.setState({ isDialogVisiable: true }); }}>
-                {this.state.images[4] === 'undefined' ?
-                  <AntDesign style={styles.plusIcon}
-                    name='plus'
-                    size={30}
-                    color={Colors.orange}
-                  />
-                  :
-                  <Image style={styles.imageArea} source={{ uri: this.state.images[4] }} />
-                }
-              </TouchableOpacity>
-            </View>
+            {
+              this.state.images.map((image) =>
+                <View style={styles.imageUploadButtonArea}>
+                  <TouchableOpacity
+                    style={styles.imageUploadButton}
+                    onPress={() => this.setState({
+                      selectedImgIdx: image.id,
+                      modalVisible: true,
+                    })}>
+                    {
+                      image.uri === 'undefined'
+                        ? <AntDesign
+                          style={styles.plusIcon}
+                          name='plus'
+                          size={30}
+                          color={Colors.orange}
+                        />
+                        : <Image
+                          style={styles.imageArea}
+                          source={{ uri: image.uri }}
+                        />
+                    }
+                  </TouchableOpacity>
+                </View>
+              )
+            }
           </View>
         </View>
         <Modal
@@ -133,7 +100,8 @@ export default class Body4 extends Component {
         >
           <View style={styles.modal}>
             <ImageUploader
-              onCancel={() => this.setState({ modalVisible: false })}
+              dismissDialog={() => this.setState({ modalVisible: false })}
+              setImageURI={this.setImageURI}
             />
           </View>
         </Modal>
