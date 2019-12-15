@@ -8,10 +8,13 @@ export default function Footer({ goNext, submit, isActive, isFinal }) {
     <View style={styles.container}>
       <RoundButton
         height={60}
-        text={isFinal ? '등록하기' : '다음으로'}
-        isActive={isActive}
+        color={Colors.white}
+        borderColor={isActive ? Colors.buttonActive : Colors.buttonInactive}
+        backgroundColor={isActive ? Colors.buttonActive : Colors.buttonInactive}
         onPress={isFinal ? submit : goNext}
-      />
+      >
+        {isFinal ? '등록하기' : '다음으로'}
+      </RoundButton>
     </View>
 
   )

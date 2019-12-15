@@ -1,5 +1,6 @@
 export const SET_LIST = 'SET_LIST'
 export const SET_POST = 'SET_POST'
+export const ADD_POST = 'ADD_POST'
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const ADD_SUB_COMMENT = 'ADD_SUB_COMMENT'
 
@@ -14,6 +15,13 @@ export function setPost (postDetail) {
   return {
     type: SET_POST,
     postDetail,
+  }
+}
+
+export function addPost (post) {
+  return {
+    type: SET_ADD_POSTPOST,
+    post,
   }
 }
 

@@ -43,7 +43,7 @@ export default class DirectTextInput extends Component {
               style={styles.brandInputButton}
               onPress={() => this.setState({ isOnWriting: true })}
             >
-              <Text style={{ color: labelTextColor ? labelTextColor : '000' }} >
+              <Text style={{ color: labelTextColor ? labelTextColor : '#000' }} >
                 {labelText}
               </Text>
               <Image

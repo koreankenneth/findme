@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, Alert } from 'react-native'
 import Layout from '../constants/Layout'
 import Intro from '../components/findme/write/Intro'
 import Body1 from '../components/findme/write/Body1'
@@ -11,8 +11,11 @@ import Header from '../components/findme/write/Header'
 import Footer from '../components/findme/write/Footer'
 import Nav from '../components/findme/write/Nav'
 import BrandSearch from '../components/findme/write/BrandSearch'
+import { saveFindMePost } from '../utils/api'
+import { uploadImage } from '../utils/cloudapi'
 
 const width = Layout.window.width * 0.9
+const uuid = require('uuid/v4')
 
 class FindMeWriteScreen extends Component {
   state = {
@@ -24,7 +27,9 @@ class FindMeWriteScreen extends Component {
     brand: 'undefined',
     product: 'undefined',
     color: 'undefined',
-    body: 'undefined',
+    size: 'undefined',
+    text: 'undefined',
+    images: [],
   }
 
   goBack = () => this.goPage(this.state.page - 1)
@@ -32,21 +37,56 @@ class FindMeWriteScreen extends Component {
   goPage = (page) => {
     const currentPage = this.state.page
 
-    // if (page <= currentPage) {
+    if (page <= currentPage) {
     this.setState({ page: page })
-    // }
-    // else {
-    //   this.validateData(page)
-    //     ? this.setState({ page: page })
-    //     : Alert.alert('Error', 'Please select all.')
-    // }
+    }
+    else {
+      this.validateData(page)
+        ? this.setState({ page: page })
+        : Alert.alert('Error', 'Please select all.')
+    }
   }
+
+  setDisplayType = (displayType) => {
+    this.setState({ displayType: displayType }, () => this.goNext())
+  }
+
   setInnerPage = (innerPage) => {
     this.setState({ innerPage: innerPage })
   }
 
+  submit = (post) => {
+    let imageURLs = []
+    Promise.all(
+      post.images.map(async (image) => {
+        await uploadImage(image, uuid())
+          .then((result) => {
+            result.isOK && imageURLs.push(result.url)
+          })
+      })
+    ).then(() => {
+      post.images = imageURLs
+      saveFindMePost(post)
+        .then((result) => {
+          console.log('result=', result)
+        })
+    })
+
+    this.props.onClose()
+  }
+
   validateData = (page) => {
-    const { displayType, gender, category, brand, product } = this.state
+    const {
+      displayType,
+      gender,
+      category,
+      brand,
+      product,
+      color,
+      size,
+      text,
+      images,
+    } = this.state
 
     switch (page) {
       case 1:
@@ -65,6 +105,28 @@ class FindMeWriteScreen extends Component {
           brand != 'undefined' &&
           product != 'undefined'
         )
+      case 4:
+        return (
+          displayType != 'undefined' &&
+          gender != 'undefined' &&
+          category != 'undefined' &&
+          brand != 'undefined' &&
+          product != 'undefined' &&
+          color != 'undefined' &&
+          size != 'undefined'
+        )
+      case 5:
+      return (
+        displayType != 'undefined' &&
+        gender != 'undefined' &&
+        category != 'undefined' &&
+        brand != 'undefined' &&
+        product != 'undefined' &&
+        color != 'undefined' &&
+        size != 'undefined' &&
+        text != 'undefined' &&
+        images.length > 0
+      )
       default:
         return false
     }
@@ -95,27 +157,23 @@ class FindMeWriteScreen extends Component {
             setBrand={this.setBrand}
             goBack={() => this.setInnerPage('main')}
           />
-          case 3:
-            return <Body3
-              color={color}
-              size={size}
-              setColor={this.setColor}
-              setSize={this.setSize}
-            />
-            case 4:
-              return <Body4
-                text={text}
-                images={images}
-                setText={this.setText}
-                setImages={this.setImages}
-              />
+      case 3:
+        return <Body3
+          color={color}
+          size={size}
+          setColor={this.setColor}
+          setSize={this.setSize}
+        />
+      case 4:
+        return <Body4
+          text={text}
+          images={images}
+          setText={this.setText}
+          setImages={this.setImages}
+        />
       default:
         return <Intro setDisplayType={this.setDisplayType} />
     }
-  }
-
-  setDisplayType = (displayType) => {
-    this.setState({ displayType: displayType }, () => this.goNext())
   }
 
   setGender = (gender) => this.setState({ gender: gender })
@@ -128,7 +186,9 @@ class FindMeWriteScreen extends Component {
   setImages = (images) => this.setState({ images: images })
 
   render() {
-    const { page } = this.state
+    const { page, images } = this.state
+    const isActive = this.validateData(page + 1)
+
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -155,9 +215,9 @@ class FindMeWriteScreen extends Component {
             this.state.page != 0 &&
             <Footer
               goNext={this.goNext}
-              isActive={true}
+              isActive={isActive}
               isFinal={page === 4}
-              submit={() => this.displayFinalConfirm(true)}
+              submit={() => this.submit(this.state)}
             />
           }
         </View>

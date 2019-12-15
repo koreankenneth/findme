@@ -36,8 +36,16 @@ export default class Body4 extends Component {
 
   setImageURI = (uri) => {
     const _images = this.state.images
+    let savedImage = []
+
     _images[this.state.selectedImgIdx].uri = uri
     this.setState({ images: _images })
+
+    _images.map((image) => {
+      image.uri != 'undefined' && savedImage.push(image.uri)
+    })
+
+    this.props.setImages(savedImage)
   }
 
   render() {
@@ -67,7 +75,10 @@ export default class Body4 extends Component {
           <View style={styles.imageUploadAreaRow}>
             {
               this.state.images.map((image) =>
-                <View style={styles.imageUploadButtonArea}>
+                <View
+                  style={styles.imageUploadButtonArea}
+                  key={image.id}
+                >
                   <TouchableOpacity
                     style={styles.imageUploadButton}
                     onPress={() => this.setState({

@@ -1,40 +1,40 @@
 import React from 'react'
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
-import Colors from '../../constants/Colors'
+import { Text, TouchableOpacity, StyleSheet } from 'react-native'
+import Colors from '../../constants/Colors';
 
-export default function RoundButton({ height, text, isActive, onPress }) {
+export default function RoundButton({ 
+  children, 
+  onPress, 
+  height = 40, 
+  width = '100%', 
+  color = Colors.orange,
+  backgroundColor = Colors.white,
+  borderColor = Colors.gray,
+}) {
   return (
-      <TouchableOpacity
-        style={[{height: height, borderRadius: height/2}, isActive ? styles.buttonActive : styles.buttonInactive]}
-        disabled={!isActive}
-        onPress={onPress}
-      >
-        <Text
-          style={styles.buttonText}
-        >
-          {text}
-        </Text>
-      </TouchableOpacity>
-
+    <TouchableOpacity 
+      style={[styles.button, {
+        height: height, 
+        width: width, 
+        borderColor: borderColor,
+        backgroundColor: backgroundColor,
+        borderRadius: height/2
+      }]}
+      onPress={onPress}
+    >
+      <Text style={[styles.text, {color: color}]}>{children}</Text>
+    </TouchableOpacity>
   )
 }
 
 const styles = StyleSheet.create({
-  buttonActive: {
-    width: '105%',
+  button: {
+    borderWidth: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Colors.buttonActive,
   },
-  buttonInactive: {
-    width: '105%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: Colors.buttonInactive,
-  },
-  buttonText: {
-    color: Colors.tintColor,
-    fontWeight: '600',
+  text: {
     fontSize: 15,
-  }
+    fontWeight: '600',
+  },
 })

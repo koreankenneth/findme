@@ -7,7 +7,7 @@ import FloatingButton from '../components/common/FloatingButton'
 import FindMeWriteScreen from '../screens/FindMeWriteScreen'
 import { loadFindMeList, getSession } from '../utils/api'
 import { AppLoading } from 'expo'
-import { setList } from '../actions/findme'
+import { setList, addPost } from '../actions/findme'
 import { setSession } from '../actions/session'
 import Header from '../components/findme/main/Header'
 import Colors from '../constants/Colors'
@@ -34,6 +34,10 @@ class FindMeMainScreen extends Component {
     loadFindMeList()
       .then((list) => dispatch(setList(list)))
       .then(() => this.setState({ ready: true }))
+  }
+
+  addFindMePost = (post) => {
+    dispatch(addPost(post))
   }
 
   goPage = (page) => {
@@ -101,6 +105,7 @@ class FindMeMainScreen extends Component {
         >
           <View style={styles.modal}>
               <FindMeWriteScreen
+                onSubmit={this.addFindMePost}
                 onClose={() => this.toggleModal()}
               />
             </View>

@@ -93,7 +93,10 @@ export default class BrandSearch extends Component {
                 brand.keyWords.toLowerCase().includes(searchText.toLowerCase())
               )
                 .map((brand) =>
-                  < View style={styles.brandItem} >
+                  <View
+                    style={styles.brandItem}
+                    key={brand.englishName}
+                  >
                     <TouchableOpacity
                       style={styles.brandButton}
                       onPress={() => this.submit(brand.englishName)}

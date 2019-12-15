@@ -85,6 +85,7 @@ export default function Body1({ setGender, setCategory, gender, category }) {
                 const { text, value } = genders[key]
                 return (
                   <ShadowButton
+                    key={key}
                     text={text}
                     area={'gender'}
                     value={value}
@@ -109,6 +110,7 @@ export default function Body1({ setGender, setCategory, gender, category }) {
                 const { uri, text, value } = categories[key]
                 return (
                   <ShadowButton
+                    key={key}
                     image={uri}
                     text={text}
                     area={'category'}

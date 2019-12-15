@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, Text, TouchableOpacity, Image, TextInput } from 'react-native'
 import * as Permissions from 'expo-permissions'
-import Constants from 'expo'
+import Constants from 'expo-constants'
 import * as ImagePicker from 'expo-image-picker'
 
 export default class ImageUploader extends Component {

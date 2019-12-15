@@ -45,6 +45,7 @@ export default function Body3({ color, size, setColor, setSize }) {
             {
               colorPalletLine1.map((color) =>
                 <ColorCircle
+                  key={color}
                   color={color}
                   area='color'
                   value={color}
@@ -58,6 +59,7 @@ export default function Body3({ color, size, setColor, setSize }) {
             {
               colorPalletLine2.map((color) =>
                 <ColorCircle
+                  key={color}
                   color={color}
                   area='color'
                   value={color}
@@ -84,6 +86,7 @@ export default function Body3({ color, size, setColor, setSize }) {
             {
               sizes.map((size) =>
                 <ShadowButton
+                  key={size}
                   text={size}
                   area={'size'}
                   value={size}
@@ -116,6 +119,7 @@ function ShadowButton({ image, text, area, value, selectedValue, onPress }) {
 
 function ColorCircle({ color, area, value, selectedValue, onPress }) {
   const borderColor = color === selectedValue ? Colors.black : Colors.tintColor
+  
   return (
     <TouchableOpacity
       style={[styles.colorCircleBorder, { borderColor: borderColor }]}

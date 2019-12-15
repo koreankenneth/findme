@@ -1,4 +1,4 @@
-import { SET_LIST, SET_POST, ADD_COMMENT, ADD_SUB_COMMENT } from '../actions/findme'
+import { SET_LIST, SET_POST, ADD_POST, ADD_COMMENT, ADD_SUB_COMMENT } from '../actions/findme'
 
 export default function findme(state = {}, action) {
   switch (action.type) {
@@ -11,6 +11,14 @@ export default function findme(state = {}, action) {
       return {
         ...state,
         postDetail: { ...action.postDetail },
+      }
+    case ADD_POST:
+      return {
+        ...state,
+        list: {
+          ...state.list,
+          [action.post.id]: action.post,
+        },
       }
     case ADD_COMMENT:
       return {
@@ -26,7 +34,7 @@ export default function findme(state = {}, action) {
     case ADD_SUB_COMMENT:
       const comments = state.postDetail.comments
       const comment = comments[action.index]
-      const newChildComments= [...comment.childComments, action.comment] 
+      const newChildComments = [...comment.childComments, action.comment]
       const newComment = {
         ...comment,
         childComments: [...newChildComments],
@@ -38,7 +46,7 @@ export default function findme(state = {}, action) {
           return item
         }
       })
-      
+
       return {
         ...state,
         postDetail: {

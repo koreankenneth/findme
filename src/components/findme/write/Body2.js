@@ -5,11 +5,6 @@ import { Feather, Ionicons } from '@expo/vector-icons'
 
 
 export default function Body2({ brand, product, setProduct, setInnerPage }) {
-
-  state = {
-    product: '',
-  }
-
   return (
     <View style={styles.container}>
       <View style={styles.subjectArea}>
@@ -48,8 +43,8 @@ export default function Body2({ brand, product, setProduct, setInnerPage }) {
               placeholder='예) 19/SS RX DD003'
               placeholderTextColor='#c2c2c2'
               style={styles.textInput}
-              onChangeText={(product) => setProduct({ product: product })}
-              value={product === 'undefined' ? '' : product}
+              onChangeText={(product) => setProduct(product)}
+              value={product == 'undefined' ? '' : product}
             />
           </View>
         </View>
